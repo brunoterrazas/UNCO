@@ -1,0 +1,19 @@
+input{
+    border:none;
+    background-color: transparent;
+  }
+  
+  input:focus,
+  select:focus,
+  textarea:focus,
+  button:focus {
+      outline: none;
+  }
+  
+  .fa-user-circle-o{
+    color: gray;
+  }
+  .boton-login{
+    background-color: #00ce81;
+    color: #fff;
+  }

@@ -1,0 +1,15 @@
+input{
+    border:none;
+    background-color: transparent;
+  }
+  
+  input:focus,
+  select:focus,
+  textarea:focus,
+  button:focus {
+      outline: none;
+  }
+  
+  .fa-user-circle-o{
+    color: gray;
+  }
