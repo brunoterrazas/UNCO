@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package eje7;
+package eje2;
 
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
@@ -18,6 +18,7 @@ public class Confiteria {
     private Semaphore semSillaLibre;
     private Semaphore semServir;
     private Semaphore semComer;
+    private Semaphore semComidaLista;
     private int contador=0;
     private int cantidad;
 
@@ -27,6 +28,7 @@ public class Confiteria {
         semSillaLibre=new Semaphore(1);
         semServir=new Semaphore(0);
         semComer=new Semaphore(0);
+        semComidaLista=new Semaphore(0);
         this.cantidad=cantidad;
     }
     public String getNombre() {
