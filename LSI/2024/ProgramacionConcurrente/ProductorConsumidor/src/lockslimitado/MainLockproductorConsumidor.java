@@ -26,14 +26,14 @@ int numeroProductores =1;
 int numeroConsumidores =10;
 //int numeroConsumidores = lectura.nextInt();
         
-        Thread[] consumidor = new Thread[numeroProductores];
-        Thread[] productor = new Thread[numeroConsumidores];
+        Thread[] consumidor = new Thread[numeroConsumidores];
+        Thread[] productor = new Thread[numeroProductores];
        
         for (int i = 0; i < numeroProductores; i++) {
             productor[i] = new Thread(new Productor(buf, (i+1)));
     
             productor[i].start();
-  
+         
 
         }
 
