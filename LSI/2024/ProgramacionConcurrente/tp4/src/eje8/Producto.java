@@ -9,14 +9,14 @@ package eje8;
  *
  * @author Usuario
  */
-public class Producto implements Runnable{
-    private String nombre;
-    public Producto(String nombre)
+public class Producto{
+    protected String nombre;
+    protected String tipo;
+    protected ControladorProduccion controladorProduccion;
+    public Producto(String nombre,String tipo,ControladorProduccion controlador)
     {
-    this.nombre=nombre;
-    }
-    @Override
-    public void run(){
-        
+       this.nombre=nombre;
+       this.tipo=tipo;
+       this.controladorProduccion=controlador;
     }
 }

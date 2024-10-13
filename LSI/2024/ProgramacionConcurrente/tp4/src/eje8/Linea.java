@@ -5,19 +5,32 @@
  */
 package eje8;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Usuario
  */
 public class Linea implements Runnable{
-   private String tipo;
-   public Linea(String tipo)
+   private ControladorProduccion controladorProduccion;
+   public Linea(ControladorProduccion controlador)
    {
-       this.tipo=tipo;
+       this.controladorProduccion=controlador;
    }
    @Override
    public void run()
    {
-       
+       while(true)
+       {
+           try {
+                   controladorProduccion.cambiarLineas();
+               Thread.sleep(3000);
+               System.out.println("Cambiando lineas");
+           
+           } catch (InterruptedException ex) {
+               Logger.getLogger(Linea.class.getName()).log(Level.SEVERE, null, ex);
+           }
+       }
    }
 }
