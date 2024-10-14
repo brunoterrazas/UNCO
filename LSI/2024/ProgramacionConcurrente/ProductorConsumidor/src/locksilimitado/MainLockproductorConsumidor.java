@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lockslimitado;
+package locksilimitado;
 
+import lockslimitado.*;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,7 +17,7 @@ import java.util.Scanner;
 public class MainLockproductorConsumidor {
 
     public static void main(String[] args) {
-        Buffer buf = new Buffer(0);
+        Buffer buf = new Buffer(10);
         Scanner lectura = new Scanner (System.in);
         System.out.println("Ingrese cantidad de productores: ");
 

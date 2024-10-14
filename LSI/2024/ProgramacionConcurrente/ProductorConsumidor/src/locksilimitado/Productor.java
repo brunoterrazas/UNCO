@@ -3,22 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lockslimitado;
+package locksilimitado;
 
-import java.util.Random;
+import lockslimitado.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  *
- * @author Grupo L
+ * @author Usuario
  */
-public class Consumidor implements Runnable {
+public class Productor
+        implements Runnable {
 
     private Buffer buffer;
     private int ide;
 
-    public Consumidor(Buffer b, int id) {
+    public Productor(Buffer b, int id) {
         this.buffer = b;
         this.ide = id;
     }
@@ -26,21 +27,16 @@ public class Consumidor implements Runnable {
     public void run() {
         while (true) {
             try {
-                Random val = new Random();
+              
+                  Thread.sleep((300));
 
-               // int num = val.nextInt(20);
-
-              //  int aleatorio = num * 1000;
-                
-                Thread.sleep((300));
-
-                buffer.sacar(ide);
+               buffer.agregar(ide);
 
             } catch (InterruptedException ex) {
                 Logger.getLogger(Consumidor.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-        }
 
+       //     System.out.println("El hilo termino de ejecutar el hilo:" + nom);
+        }
     }
 }

@@ -3,15 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package lockslimitado;
+package locksilimitado;
 
+import lockslimitado.*;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  *
- * @author Grupo L
+ * @author Usuario
  */
 public class Consumidor implements Runnable {
 
@@ -39,7 +40,10 @@ public class Consumidor implements Runnable {
             } catch (InterruptedException ex) {
                 Logger.getLogger(Consumidor.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+            // System.out.println("El hilo termino de ejecutar el hilo:" + nom);
+            // System.out.println("El hilo termino de ejecutar el hilo:" + nom);
+            // System.out.println("El hilo termino de ejecutar el hilo:" + nom);
+            // System.out.println("El hilo termino de ejecutar el hilo:" + nom);
         }
 
     }
