@@ -16,13 +16,14 @@ import java.util.concurrent.locks.ReentrantLock;
 public class PlatoLock {
 
     private Lock accesoComida;
-    private Condition hayLugar;
+    private Condition hayLugar;  //hamster en esperando para comer
+     
     private int cantidad;
     private int comiendo;
 
     public PlatoLock(int maximo) {
         accesoComida = new ReentrantLock(true);
-// se crea la variable de condición asociada al lock accesoComida
+        //se crea la variable de condición asociada al lock accesoComida
         hayLugar = accesoComida.newCondition();
         comiendo = 0;
         cantidad = maximo;
