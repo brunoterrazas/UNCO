@@ -12,7 +12,7 @@ package eje7;
 public class testConfiteria {
      public static void main(String[] args) {
        
-        int cantEmpleados=10;
+        int cantEmpleados=5;
         
         Confiteria confiteria = new Confiteria("Pollos hermanos",cantEmpleados);
          System.out.println("*************** Confiteria "+confiteria.getNombre());

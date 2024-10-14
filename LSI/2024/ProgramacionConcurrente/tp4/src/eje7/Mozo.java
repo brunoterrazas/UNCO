@@ -21,8 +21,8 @@ public class Mozo extends Thread {
         while(confiteria.getContador()<confiteria.getCantidad())
         {
             System.out.println("El mozo esta descansando, inventando nuevas recetas");
-    confiteria.tomarPedido();
-    confiteria.servirPedido();
+            confiteria.tomarPedido();
+            confiteria.servirPedido();
         }
        }
 }

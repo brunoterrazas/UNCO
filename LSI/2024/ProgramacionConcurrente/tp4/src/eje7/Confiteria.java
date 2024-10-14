@@ -47,7 +47,7 @@ public class Confiteria {
         } catch (InterruptedException ex) {
             Logger.getLogger(Confiteria.class.getName()).log(Level.SEVERE, null, ex);
         }
-        this.contador++;
+      
     }
     public void pedirServicio(String empleado)
     {
@@ -62,6 +62,7 @@ public class Confiteria {
             System.out.println("El mozo toma el pedido");
             
             Thread.sleep(2000);
+             this.contador++;
         } catch (InterruptedException ex) {
             Logger.getLogger(Confiteria.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -83,5 +84,6 @@ public class Confiteria {
         }
           System.out.println(empleado+" terminó de comer y vuelve a trabajar");
         semSillaLibre.release();
+         
       }
 }
