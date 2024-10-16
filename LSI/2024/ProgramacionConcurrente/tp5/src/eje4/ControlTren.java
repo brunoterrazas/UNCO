@@ -3,18 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package eje3;
+package eje4;
 
 /**
  *
- * @author Usuario
+ * @author Acer
  */
-public class Perro extends Thread {
-    private Comedor comedor;
-    public Perro(String nombre,Comedor com)
+public class ControlTren extends Thread {
+    public ControlTren(String nombre)
     {
       super(nombre);
-      this.comedor=com;
     }
     @Override
     public void run()

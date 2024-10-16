@@ -10,9 +10,11 @@ package eje3;
  * @author Usuario
  */
 public class Gato extends Thread {
-    public Gato(String nombre)
+    private Comedor comedor;
+    public Gato(String nombre,Comedor com)
     {
       super(nombre);
+      this.comedor=com;
     }
     @Override
     public void run()
