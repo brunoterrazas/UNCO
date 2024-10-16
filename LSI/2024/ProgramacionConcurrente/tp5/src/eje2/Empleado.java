@@ -5,24 +5,90 @@
  */
 package eje2;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Usuario
  */
 public class Empleado extends Thread {
+
     private Confiteria confiteria;
-    public Empleado(String nombre, Confiteria confiteria)
-    {
+
+    public Empleado(String nombre, Confiteria confiteria) {
         super(nombre);
-        this.confiteria=confiteria;
+        this.confiteria = confiteria;
     }
+
     @Override
-    public void run(){
-    String nombre;
-    nombre=Thread.currentThread().getName();
-    confiteria.sentarse(nombre);
-    confiteria.pedirServicio(nombre);
-    confiteria.comer(nombre);
-    
+    public void run() {
+        String nombre;
+        nombre = this.getName();
+        System.out.println(nombre + " esta intentando sentarse");
+        if (confiteria.sentarse(nombre)) {
+            
+            int opcion = valorRandom(3); //1,2 o 3
+            switch (opcion) {
+                case 1://solo beber
+                  System.out.println(nombre+" le pide al mozo solo una bebida");
+
+                try {
+                    System.out.println(nombre+" esta tomando su bebida....");
+                    Thread.sleep(300);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
+                }       
+                    confiteria.pedirBebida(nombre);
+                    confiteria.beber(nombre);
+                    confiteria.dejarAsiento(nombre);
+                    break;
+                case 2://solo comer
+                    
+                  System.out.println(nombre+" le pide al cocinero solo la comida");
+                    confiteria.pedirComida(nombre);
+                    try {
+                    System.out.println(nombre+"luego empieza a comer....");
+                    confiteria.comer();
+                    Thread.sleep(300);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                    confiteria.dejarAsiento(nombre);
+                    break;
+                case 3://beber y comer
+                    System.out.println(nombre+" le pide una bebida al mozo, luego le sirven la comida");
+                    confiteria.pedirBebida(nombre);
+                    
+                try {
+                    System.out.println(nombre+" esta tomando primero su bebida....");
+                    Thread.sleep(300);
+                           confiteria.dejarAsiento(nombre);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            {
+                try {
+                    System.out.println(nombre+"luego empieza a comer....");
+                    confiteria.comer();
+                           confiteria.dejarAsiento(nombre);
+                    Thread.sleep(300);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+                    
+             
+                    break;
+            }
+
+        } else {
+            System.out.println(nombre + " no pudo conseguir lugar");
+        }
+
+    }
+
+    public int valorRandom(int max) {
+        return (int) (Math.random() * max + 1);
     }
 }

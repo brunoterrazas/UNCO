@@ -29,7 +29,7 @@ public class PlatoLock {
         cantidad = maximo;
     }
 
-    public void empezarAComer(String nombre) {
+    public void  empezarAComer (String nombre) {
         try {
             accesoComida.lock();
             while (comiendo >= cantidad) {

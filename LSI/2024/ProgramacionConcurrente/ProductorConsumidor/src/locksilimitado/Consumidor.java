@@ -40,10 +40,7 @@ public class Consumidor implements Runnable {
             } catch (InterruptedException ex) {
                 Logger.getLogger(Consumidor.class.getName()).log(Level.SEVERE, null, ex);
             }
-            // System.out.println("El hilo termino de ejecutar el hilo:" + nom);
-            // System.out.println("El hilo termino de ejecutar el hilo:" + nom);
-            // System.out.println("El hilo termino de ejecutar el hilo:" + nom);
-            // System.out.println("El hilo termino de ejecutar el hilo:" + nom);
+         
         }
 
     }

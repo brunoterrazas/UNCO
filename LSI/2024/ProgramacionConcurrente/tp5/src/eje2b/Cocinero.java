@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package eje2;
+package eje2b;
+
 
 /**
  *
  * @author Acer
  */
 public class Cocinero extends Thread {
-
     private Confiteria confiteria;
 
     public Cocinero(String nombre, Confiteria confiteria) {
@@ -20,16 +20,10 @@ public class Cocinero extends Thread {
 
     @Override
     public void run() {
-        while (true) {
-            //cocinar
-               System.out.println("Descansando, inventando recetas");
-            confiteria.prepararComida();
-            System.out.println("El cocinero prepara la comida");
-
-            //entregar comida
-            confiteria.servirComida();
-            System.out.println("El cocinero entrega la comida");
+        while (confiteria.getContador()<confiteria.getCantidad()) {
+            System.out.println("El cocinero está descansando, inventando recetas");
+            confiteria.prepararComida();  // Prepara la comida cuando los empleados la solicitan
         }
     }
-
 }
+
