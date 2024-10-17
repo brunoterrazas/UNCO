@@ -16,11 +16,11 @@ import java.util.logging.Logger;
 public class Comedor {
     private  int gatosEnEspera;
     private  int perrosEnEspera;
-    private final Semaphore semPerros;
-    private final Semaphore semGatos;
-    private final boolean comenGatos;
-    private final int maxComedor;
-    private final Semaphore mutex;
+    private Semaphore semPerros;
+    private Semaphore semGatos;
+    private boolean comenGatos;
+    private Semaphore semComer;
+    private Semaphore mutex;
     private int cantidadComiendo=0;
     public Comedor(int max)
     {
@@ -28,7 +28,7 @@ public class Comedor {
       semGatos=new Semaphore(0,true);
       gatosEnEspera=0;
       perrosEnEspera=0;
-      this.maxComedor=max;
+      semComer=new Semaphore(max,true);
       cantidadComiendo=0;
       comenGatos=true;
       mutex=new Semaphore(1,true);
@@ -36,13 +36,15 @@ public class Comedor {
     public void entraPerro(String perro)
     {
         try {
-            semPerros.acquire();
             mutex.acquire(); 
             perrosEnEspera++;
             mutex.release();
+            semPerros.acquire();
+            semComer.acquire();
             //cant perros en espera +1
             System.out.println(perro+" esta comiendo...");
             Thread.sleep(300);
+            semComer.release();
             mutex.acquire();
             perrosEnEspera--;
             mutex.release();
@@ -54,14 +56,16 @@ public class Comedor {
     public void entraGato(String gato)
     {
     try {
-            semPerros.acquire();
             mutex.acquire(); 
             gatosEnEspera++;
+                 //cant gatos en espera +1
             mutex.release();
-            //cant gatos en espera +1
+            semPerros.acquire();
+            semComer.acquire();
             System.out.println(gato+" esta comiendo...");
             Thread.sleep(300);
-             mutex.acquire();
+            semComer.release();
+            mutex.acquire();
             gatosEnEspera--;
             mutex.release();     
     
@@ -69,9 +73,27 @@ public class Comedor {
             Logger.getLogger(Comedor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public boolean turno()
+    public boolean cambiarTurno()
     { 
-           
-      return comenGatos ;
+        try {
+            mutex.acquire();
+            if(comenGatos)
+           {
+             comenGatos=false;
+             semGatos.acquire();
+             semPerros.release(this.perrosEnEspera);
+           }
+           else 
+           {
+               comenGatos=true;
+               
+             semPerros.acquire();
+             semGatos.release(this.gatosEnEspera);
+           }
+          mutex.release();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Comedor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            return comenGatos ;
     }
 }
