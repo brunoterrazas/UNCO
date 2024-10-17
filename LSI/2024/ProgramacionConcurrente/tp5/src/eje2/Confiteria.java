@@ -87,10 +87,12 @@ public class Confiteria {
     }
 
 
-    public void comer() {
+    public void comer(String empleado) {
         try {
             semComer.acquire();
-          
+            System.out.println(empleado+" esta comiendo");  
+            Thread.sleep(200);
+              
         } catch (InterruptedException ex) {
             Logger.getLogger(Confiteria.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -100,6 +102,9 @@ public class Confiteria {
     public void beber(String empleado) {
         try {
             semBeber.acquire();
+            
+            System.out.println(empleado+" esta bebiendo");  
+            Thread.sleep(200);
           } catch (InterruptedException ex) {
             Logger.getLogger(Confiteria.class.getName()).log(Level.SEVERE, null, ex);
         }

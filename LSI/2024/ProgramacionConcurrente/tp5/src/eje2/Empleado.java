@@ -32,51 +32,21 @@ public class Empleado extends Thread {
             switch (opcion) {
                 case 1://solo beber
                   System.out.println(nombre+" le pide al mozo solo una bebida");
-
-                try {
-                    System.out.println(nombre+" esta tomando su bebida....");
-                    Thread.sleep(300);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
-                }       
+     
                     confiteria.pedirBebida(nombre);
                     confiteria.beber(nombre);
-                    confiteria.dejarAsiento(nombre);
                     break;
                 case 2://solo comer
                     
                   System.out.println(nombre+" le pide al cocinero solo la comida");
                     confiteria.pedirComida(nombre);
-                    try {
-                    System.out.println(nombre+"luego empieza a comer....");
-                    confiteria.comer();
-                    Thread.sleep(300);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                    confiteria.dejarAsiento(nombre);
+                    confiteria.comer(nombre);
                     break;
                 case 3://beber y comer
                     System.out.println(nombre+" le pide una bebida al mozo, luego le sirven la comida");
                     confiteria.pedirBebida(nombre);
-                    
-                try {
-                    System.out.println(nombre+" esta tomando primero su bebida....");
-                    Thread.sleep(300);
-                           confiteria.dejarAsiento(nombre);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            {
-                try {
-                    System.out.println(nombre+"luego empieza a comer....");
-                    confiteria.comer();
-                           confiteria.dejarAsiento(nombre);
-                    Thread.sleep(300);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Empleado.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+                  
+                    confiteria.comer(nombre);
                     
              
                     break;
@@ -85,7 +55,8 @@ public class Empleado extends Thread {
         } else {
             System.out.println(nombre + " no pudo conseguir lugar");
         }
-
+         confiteria.dejarAsiento(nombre);
+                  
     }
 
     public int valorRandom(int max) {

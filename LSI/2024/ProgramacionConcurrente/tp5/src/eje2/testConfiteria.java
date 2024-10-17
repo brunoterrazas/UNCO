@@ -19,7 +19,8 @@ public class testConfiteria {
             
         Mozo mozoThread = new Mozo("Mozo",confiteria);
           Cocinero cocineroThread = new Cocinero("Cocinero",confiteria);
-        
+            mozoThread.start();
+        cocineroThread.start();
         Empleado[] empleadoThread=new Empleado[cantEmpleados];
         for(int i=0;i<cantEmpleados;i++){
              empleadoThread[i]=new Empleado("Empleado "+(i+1), confiteria);
@@ -29,7 +30,6 @@ public class testConfiteria {
         empleadoThread[i].start();
         }
        
-        mozoThread.start();
-        cocineroThread.start();
+    
         }
 }

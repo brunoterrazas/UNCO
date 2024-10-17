@@ -20,7 +20,7 @@ public class Cocinero extends Thread {
 
     @Override
     public void run() {
-        while (true) {
+        while (confiteria.getContador()<confiteria.getCantidad()) {
             //cocinar
                System.out.println("Descansando, inventando recetas");
             confiteria.prepararComida();
