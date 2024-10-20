@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package eje5;
+package eje6;
 
 /**
  *
  * @author Acer
  */
-public class Avion {
+public class Pista {
     
 }
