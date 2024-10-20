@@ -23,6 +23,7 @@ public class Cocinero extends Thread {
         while (confiteria.getContador()<confiteria.getCantidad()) {
             System.out.println("El cocinero está descansando, inventando recetas");
             confiteria.prepararComida();  // Prepara la comida cuando los empleados la solicitan
+            System.out.println("el cocinero termino de atender");
         }
     }
 }

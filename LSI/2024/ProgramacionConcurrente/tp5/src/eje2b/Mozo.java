@@ -25,6 +25,7 @@ public class Mozo extends Thread {
             System.out.println("El mozo está descansando");
             confiteria.servirBebida();  // Sirve bebidas cuando los empleados lo solicitan
         }
+        System.out.println("mozo me fui");
     }
 }
 

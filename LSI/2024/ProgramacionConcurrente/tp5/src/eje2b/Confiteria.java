@@ -22,6 +22,7 @@ public class Confiteria {
     private Semaphore semServirComida;
     private Semaphore semComer;
     private Semaphore semComidaLista;
+    private Semaphore semMutex;
     private int contador = 0;
     private int cantidad;
 
@@ -32,6 +33,7 @@ public class Confiteria {
         semBeber = new Semaphore(0);
         semServirComida = new Semaphore(0);
         semComer = new Semaphore(0);
+        semMutex = new Semaphore(1);
         semComidaLista = new Semaphore(0);
         this.cantidad = cantidad;
     }
@@ -51,10 +53,23 @@ public class Confiteria {
     // Empleados intentan sentarse
     public boolean sentarse(String empleado) {
         boolean asientoLibre = semSillaLibre.tryAcquire();  // Ver si hay asientos libres
-        if (asientoLibre) {
+         try {
+            this.semMutex.acquire();
             this.contador++;
+            this.semMutex.release();     
+                      
+        if (asientoLibre) {
+            
             System.out.println(empleado + " se sienta");
         }
+         
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Confiteria.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         
+        
+        
+       
         return asientoLibre;
     }
 
@@ -82,7 +97,7 @@ public class Confiteria {
         try {
             semComer.acquire(); 
             System.out.println(empleado+" comienza a comer...");
-            Thread.sleep(200);  
+            Thread.sleep(100);  
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }
@@ -108,7 +123,7 @@ public class Confiteria {
         try {
             semServirComida.acquire(); 
             System.out.println("El cocinero prepara la comida....");
-            Thread.sleep(500);  
+            Thread.sleep(100);  
               System.out.println("El cocinero le entrega la comida");
             semComer.release();  // le avisa que esta lista la comida
         } catch (InterruptedException ex) {
