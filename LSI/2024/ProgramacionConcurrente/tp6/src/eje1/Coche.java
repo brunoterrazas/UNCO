@@ -5,7 +5,6 @@
  */
 package eje1;
 
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,17 +25,19 @@ public class Coche extends Thread {
 
     @Override
     public void run() {
-      
-            if (direccion.equals("Norte")) {
-                gestor.entrarCocheDelNorte(getName(),this.direccion);
-             
-                gestor.salirCocheDelNorte(getName());
 
-            } else {
-                 gestor.entrarCocheDelSur(getName(),this.direccion);
-       
-                 gestor.salirCocheDelSur(getName());
+        if (direccion.equals("Norte")) {
+            gestor.entrarCocheDelNorte(getName(), this.direccion);
+
+            gestor.salirCocheDelNorte(getName());
+
+        } else {
+            if (direccion.equals("Sur")) {
+                gestor.entrarCocheDelSur(getName(), this.direccion);
+
+                gestor.salirCocheDelSur(getName());
             }
-    
+        }
+
     }
 }

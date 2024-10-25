@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Usuario
+ * @author Brunot
  */
 public class GestionaTrafico {
 
@@ -21,26 +21,25 @@ public class GestionaTrafico {
     private Semaphore semSur;
     private Semaphore semMutex;
     private boolean turnoLibre;
-    private String direccionActual;
-
+    
     public GestionaTrafico() {
         semNorte = new Semaphore(0, true);
         semSur = new Semaphore(0, true);
         semMutex = new Semaphore(1);
-        turnoLibre = true;
-        direccionActual = "";
+        turnoLibre = true;       
     }
 
     public void entrarCocheDelNorte(String nombre, String direccion) {
         try {
             semMutex.acquire();
+            if(turnoLibre)
             definirTurno(semNorte,direccion);
-            cochesNorte++;
-
+            
+             cochesNorte++;
             semMutex.release();
-            //semNorte.acquire();  // Espera su turno para cruzar desde el norte
+            semNorte.acquire();  // Espera su turno para cruzar desde el norte
             Thread.sleep(150);
-            System.out.println("Cruzando al " + direccion + " el " + nombre);
+            System.out.println("Cruzando desde  el norte, " + nombre);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -68,12 +67,14 @@ public class GestionaTrafico {
     public void entrarCocheDelSur(String nombre, String direccion) {
         try {
             semMutex.acquire();
-           definirTurno(semSur,direccion);
+            if(turnoLibre)
+              definirTurno(semSur,direccion);
+            
             cochesSur++;
             semMutex.release();
             semSur.acquire();  // Espera su turno para cruzar desde el sur
             Thread.sleep(150);
-            System.out.println("Cruzando al " + direccion + " el " + nombre);
+            System.out.println("Cruzando desde el sur, " + nombre);
         } catch (InterruptedException ex) {
             Logger.getLogger(GestionaTrafico.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -82,11 +83,9 @@ public class GestionaTrafico {
     public void definirTurno(Semaphore sem, String direccion)
     {
             if (turnoLibre) {
-
                 turnoLibre = false;
                 sem.release();
                 System.out.println("Ingresan los coches del "+direccion);
-
             }
       
     }
@@ -95,12 +94,11 @@ public class GestionaTrafico {
 
         try {
             semMutex.acquire();
-
             cochesSur--;
             semMutex.release();
             System.out.println(nombre + " ha salido del puente desde el sur.");
             if (cochesSur == 0) {
-                if (cochesSur > 0) {
+                if (cochesNorte > 0) {
                     semNorte.release();
                 }  // Permitir a coches del norte cruzar
             } else {

@@ -8,7 +8,7 @@ package eje1;
 
 /**
  *
- * @author Acer
+ * @author Brunot
  */
 public class testGestionTrafico {
 
@@ -17,16 +17,21 @@ public class testGestionTrafico {
      */
      public static void main(String[] args) {
         GestionaTrafico puente = new GestionaTrafico();
-        Coche[] coches = new Coche[10];
-
-        for (int i = 0; i < 5; i++) {
-            coches[i] = new Coche("CocheNorte " + (i + 1), "Norte", puente);
-            coches[i + 5] = new Coche("CocheSur " + (i + 1), "Sur", puente);
+        int cantCoches=10;
+        Coche[] coches = new Coche[cantCoches];
+       String[] direccion = {"Norte", "Sur"};
+        for (int i = 0; i < coches.length; i++) {
+            String dir=direccion[valorRandom(2)-1];
+            coches[i] = new Coche("Coche"+dir+"-" + (i + 1),dir , puente);
+         
         }
 
         for (Coche coche : coches) {
             coche.start();
         }
+    }
+      public static int valorRandom(int max) {
+        return (int) (Math.random() * max + 1);
     }
     
 }
