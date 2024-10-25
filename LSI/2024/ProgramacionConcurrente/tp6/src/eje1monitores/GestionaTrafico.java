@@ -1,6 +1,7 @@
 package eje1monitores;
 
 public class GestionaTrafico {
+
     private int cantCochesNorte;
     private int cantCochesSur;
 
@@ -12,6 +13,7 @@ public class GestionaTrafico {
     public synchronized void EntrarCocheDelNorte(String nombre) {
         while (cantCochesSur > 0) {
             try {
+                //Espera bloqueado,mientras ingresan los coches del sur
                 wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -25,6 +27,7 @@ public class GestionaTrafico {
         cantCochesNorte--;
         System.out.println(nombre + " ha salido del puente desde el norte");
         if (cantCochesNorte == 0) {
+            //Despierta a los coches que estan en espera
             notifyAll();
         }
     }
@@ -32,6 +35,7 @@ public class GestionaTrafico {
     public synchronized void EntrarCocheDelSur(String nombre) {
         while (cantCochesNorte > 0) {
             try {
+                //Espera bloqueado,mientras ingresan los coches del norte
                 wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -45,6 +49,7 @@ public class GestionaTrafico {
         cantCochesSur--;
         System.out.println(nombre + " ha salido del puente desde el sur");
         if (cantCochesSur == 0) {
+            //Despierta a los coches que estan en espera
             notifyAll();
         }
     }

@@ -21,8 +21,8 @@ public class testGestionTrafico {
         Coche[] coches = new Coche[10];
 
         for (int i = 0; i < 5; i++) {
-            coches[i] = new Coche("CocheNorte " + (i + 1), "norte", puente);
-            coches[i + 5] = new Coche("CocheSur " + (i + 1), "sur", puente);
+            coches[i] = new Coche("CocheNorte " + (i + 1), "Norte", puente);
+            coches[i + 5] = new Coche("CocheSur " + (i + 1), "Sur", puente);
         }
 
         for (Coche coche : coches) {
