@@ -34,7 +34,7 @@ public class GestionaTrafico {
     public void entrarCocheDelNorte(String nombre, String direccion) {
         try {
             semMutex.acquire();
-            definirTurno(semNorte,nombre);
+            definirTurno(semNorte,direccion);
             cochesNorte++;
 
             semMutex.release();
@@ -68,7 +68,7 @@ public class GestionaTrafico {
     public void entrarCocheDelSur(String nombre, String direccion) {
         try {
             semMutex.acquire();
-           definirTurno(semSur,nombre);
+           definirTurno(semSur,direccion);
             cochesSur++;
             semMutex.release();
             semSur.acquire();  // Espera su turno para cruzar desde el sur
@@ -79,13 +79,13 @@ public class GestionaTrafico {
         }
 
     }
-    public void definirTurno(Semaphore sem, String nombre)
+    public void definirTurno(Semaphore sem, String direccion)
     {
             if (turnoLibre) {
 
                 turnoLibre = false;
                 sem.release();
-                System.out.println(nombre + "primero ingresan los coches del sur.");
+                System.out.println("Ingresan los coches del "+direccion);
 
             }
       
