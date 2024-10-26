@@ -1,0 +1,103 @@
+package eje1c;
+
+/**
+ *
+ * @author Brunot
+ */
+public class GestionaTrafico {
+
+    private int cantCochesNorte;
+    private int cantCochesSur;
+    private int limiteCoches;
+    private int cochesCruzando;
+    private boolean turnoNorte;
+
+    
+    public GestionaTrafico() {
+        cantCochesNorte = 0;
+        cantCochesSur = 0;
+        limiteCoches=10;//cantidad de coches antes de cambiar de direccion
+        cochesCruzando=0;
+        turnoNorte=true;
+    }
+     /*
+    Caso 1: definir turno
+     bloquear coches del otro lado
+    CAMBIO DE TURNO
+    IF(mi turno) 
+    Caso 2:  IF(cantidadcochesIngresado==limiteAutos)
+    {
+      bloquear los coches de su lado
+      cambiar turno
+       if(hay coches del otro lado esperando)
+        
+     
+      cochesCruzando=0;
+    despertar coches del otro lado
+    }
+    */
+    public synchronized void EntrarCocheDelNorte(String nombre) {
+        while ((!turnoNorte||cochesCruzando>=limiteCoches)) {
+            try {
+                //Espera bloqueado,mientras ingresan los coches del sur
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        cantCochesNorte++;
+        cochesCruzando++;
+        
+        System.out.println(nombre + " está cruzando el puente desde el norte");
+    }
+    public synchronized boolean puedeCruzar()
+    {
+       return cochesCruzando<limiteCoches;
+    }
+    public synchronized void SalirCocheDelNorte(String nombre) {
+        cantCochesNorte--;
+        
+        System.out.println(nombre + " ha salido del puente desde el norte");
+        
+         if(cochesCruzando==limiteCoches|| cantCochesNorte == 0)
+        {//si es el ultimo coche que puede pasar antes de cambiar de turno
+         //si terminaron de cruzar 10 coches
+         turnoNorte=false;
+         cochesCruzando=0;
+         //Despierta a los coches que estan en espera
+            notifyAll();
+        }   
+        
+    }
+
+    public synchronized void EntrarCocheDelSur(String nombre) {
+        while ((turnoNorte||cochesCruzando>=limiteCoches)) {
+            try {
+                //Espera bloqueado,mientras ingresan los coches del norte
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        cantCochesSur++;
+        cochesCruzando++;
+        System.out.println(nombre + " está cruzando el puente desde el sur");
+    }
+
+    public synchronized void SalirCocheDelSur(String nombre) {
+        cantCochesSur--;
+        System.out.println(nombre + " ha salido del puente desde el sur");
+        
+            if(cochesCruzando==limiteCoches || cantCochesSur == 0)
+            {//si es el ultimo coche que puede pasar antes de cambiar de turno
+         //si terminaron de cruzar 10 coches
+              turnoNorte=true;
+              cochesCruzando=0;
+               //Despierta a los coches que estan en espera
+            notifyAll();
+            }
+           
+        
+    }
+}
