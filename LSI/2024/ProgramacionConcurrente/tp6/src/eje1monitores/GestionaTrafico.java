@@ -20,12 +20,12 @@ public class GestionaTrafico {
             }
         }
         cantCochesNorte++;
-        System.out.println(nombre + " está cruzando el puente desde el norte");
+        System.out.println(nombre + " está cruzando el puente");
     }
 
     public synchronized void SalirCocheDelNorte(String nombre) {
         cantCochesNorte--;
-        System.out.println(nombre + " ha salido del puente desde el norte");
+        System.out.println(nombre + " ha salido del puente");
         if (cantCochesNorte == 0) {
             //Despierta a los coches que estan en espera
             notifyAll();
@@ -42,12 +42,12 @@ public class GestionaTrafico {
             }
         }
         cantCochesSur++;
-        System.out.println(nombre + " está cruzando el puente desde el sur");
+        System.out.println(nombre + " está cruzando el puente");
     }
 
     public synchronized void SalirCocheDelSur(String nombre) {
         cantCochesSur--;
-        System.out.println(nombre + " ha salido del puente desde el sur");
+        System.out.println(nombre + " ha salido del puente");
         if (cantCochesSur == 0) {
             //Despierta a los coches que estan en espera
             notifyAll();
