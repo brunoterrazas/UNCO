@@ -20,22 +20,6 @@ public class GestionaTrafico {
         cochesCruzando=0;
         turnoNorte=true;
     }
-     /*
-    Caso 1: definir turno
-     bloquear coches del otro lado
-    CAMBIO DE TURNO
-    IF(mi turno) 
-    Caso 2:  IF(cantidadcochesIngresado==limiteAutos)
-    {
-      bloquear los coches de su lado
-      cambiar turno
-       if(hay coches del otro lado esperando)
-        
-     
-      cochesCruzando=0;
-    despertar coches del otro lado
-    }
-    */
     public synchronized void EntrarCocheDelNorte(String nombre) {
         while ((!turnoNorte||cochesCruzando>=limiteCoches)) {
             try {
@@ -51,10 +35,7 @@ public class GestionaTrafico {
         
         System.out.println(nombre + " está cruzando el puente desde el norte");
     }
-    public synchronized boolean puedeCruzar()
-    {
-       return cochesCruzando<limiteCoches;
-    }
+   
     public synchronized void SalirCocheDelNorte(String nombre) {
         cantCochesNorte--;
         
@@ -96,8 +77,6 @@ public class GestionaTrafico {
               cochesCruzando=0;
                //Despierta a los coches que estan en espera
             notifyAll();
-            }
-           
-        
+            }  
     }
 }
