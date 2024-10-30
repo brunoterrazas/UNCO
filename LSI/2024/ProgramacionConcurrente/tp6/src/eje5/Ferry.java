@@ -45,7 +45,7 @@ public class Ferry {
     public synchronized void empezarViaje()
     {
       // Espera hasta que el ferry esté lleno
-        while (!viajando && espaciosOcupados < capacidad && espaciosDisponibles > 0) {
+        while (!viajando &&  espaciosDisponibles > 0) {
             try {
                 System.out.println("Esperando que terminen de abordar el Ferry");
                          wait();
@@ -54,13 +54,12 @@ public class Ferry {
             }
         }
 
-        if (espaciosOcupados > 0) { // Inicia el viaje solo si hay al menos un ocupante
             viajando = true;
             System.out.println("El ferry empieza su viaje");
                System.out.println("Cantidad de espacio disponibles "+espaciosDisponibles);
                 System.out.println("Cantidad de espacio ocupados "+espaciosOcupados);
             
-        }
+     
     }
     public synchronized void terminarViaje()
     {
