@@ -1,6 +1,5 @@
 package locksilimitado;
 
-import lockslimitado.*;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -31,10 +30,10 @@ public class Buffer {
         this.bolsaProd = mutex.newCondition();
         this.bolsaCons = mutex.newCondition();
     }
-    
+
     public Buffer() {
         this.cantidad = 0;
-        this.tamanio=-1;
+        this.tamanio = -1;
         this.bolsaProd = mutex.newCondition();
         this.bolsaCons = mutex.newCondition();
     }
@@ -42,20 +41,19 @@ public class Buffer {
     public void agregar(int id) throws InterruptedException {
         mutex.lock();
         try {
-            if(this.tamanio!=-1)
-            {
-            //obtiene el lock
-            //mientras la cantidad sea igual a la cantidad maxima
-            while (cantidad == tamanio) {
-                System.out.println("PRODUCTOR-" +id+" A ESPERAR!!!" );
-                bolsaProd.await();  //espera bloqueado
+            if (this.tamanio != -1) {
+                //obtiene el lock
+                //mientras la cantidad sea igual a la cantidad maxima
+                while (cantidad == tamanio) {
+                    System.out.println("PRODUCTOR-" + id + " A ESPERAR!!!");
+                    bolsaProd.await();  //espera bloqueado
+                }
             }
-            }
-            System.out.println("Productor-"+id + " pone un producto");
+            System.out.println("Productor-" + id + " pone un producto");
             //agrega un producto
             cantidad++;
             bolsaCons.signal();  //notifica a un consumidor que hay productos
-          
+
         } finally {
             mutex.unlock();
         }
@@ -67,11 +65,11 @@ public class Buffer {
             //obtiene el lock
             //mientras no haya productos
             while (cantidad == 0) {
-                System.out.println("CONSUMIDOR"+ id+" A ESPERAR!!");
+                System.out.println("CONSUMIDOR" + id + " A ESPERAR!!");
                 bolsaCons.await();  //espera bloqueado
             }
             cantidad--;
-            System.out.println("Consumidor-"+id + " saco un producto");
+            System.out.println("Consumidor-" + id + " saco un producto");
             bolsaProd.signal(); //notifica a un productor para que agregue producto 
         } finally {
             mutex.unlock();
