@@ -35,9 +35,9 @@ public class Cocina {
         CECocineroPasta = mutex.newCondition();
     }
 
-    public void prepararReceta(int cocinero, String nombre) {
-        switch (cocinero) {
-            case 1: //CocineroCarne
+    public void prepararReceta(String especialidad, String nombre) {
+        switch (especialidad) {
+            case "Carne": //CocineroCarne
                 try {
                mutex.lock();
                 while (cantidadPasta <= 0 ||cantidadVerdura <= 0) {
@@ -58,7 +58,7 @@ public class Cocina {
                  }
                    
                 break;
-            case 2://Cocinero Verdura
+            case "Verduras"://Cocinero Verdura
                   try {
                mutex.lock();
                 while (cantidadPasta <= 0 || cantidadCarne <= 0) {
@@ -79,7 +79,7 @@ public class Cocina {
                  }
                    
                 break;
-            case 3://Cocinero Pasta
+            case "Pasta"://Cocinero Pasta
                  
                   try {
                mutex.lock();
@@ -103,49 +103,47 @@ public class Cocina {
 
         }
     }
-      public void terminarReceta(int cocinero, String nombre) {
+      public void terminarReceta(String especialidad, String nombre) {
         mutex.lock(); 
         try{
-          switch (cocinero) {
+          switch (especialidad) {
              
-            case 1: //Cocinero Carne
+            case "Carne": //Cocinero Carne
                     cantidadPasta++;
                     cantidadVerdura++;
                     
                 break;
-            case 2://Cocinero Verdura
+            case "Verduras"://Cocinero Verdura
                     cantidadPasta++;
                     cantidadCarne++;
                 break;
-            case 3://Cocinero Pasta
+            case "Pasta"://Cocinero Pasta
                     cantidadCarne++;
                     cantidadVerdura++;
                     
                 break;
 
         } 
+          avisarCocinero();
         }
         finally{
              System.out.println(nombre+" termino de preparar su receta");
-            avisarCocinero();
+            
         mutex.unlock();
         
         }
       }
         public void avisarCocinero()
         {
-          if(cantidadPasta>0&&cantidadCarne>0)
-                     {
-                       CECocineroVerdura.signal();
-                     }
-                    else if(cantidadPasta>0&&cantidadVerdura>0)
-                    {
-                        CECocineroCarne.signal();
-                    }
-                    else if(cantidadCarne>0&&cantidadVerdura>0)
-                    {
-                        CECocineroPasta.signal();
-                    }
+       if (cantidadPasta > 0 && cantidadCarne > 0) {
+            CECocineroVerdura.signalAll();
+        }
+        if (cantidadPasta > 0 && cantidadVerdura > 0) {
+            CECocineroCarne.signalAll();
+        }
+        if (cantidadCarne > 0 && cantidadVerdura > 0) {
+            CECocineroPasta.signalAll();
+        }
         
     }
 

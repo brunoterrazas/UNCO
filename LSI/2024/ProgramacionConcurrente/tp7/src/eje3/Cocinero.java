@@ -26,26 +26,12 @@ public class Cocinero extends Thread {
     public void run()
     {
     try {
-            switch (especialidad) {
-                case "Carne":
-                    cocina.prepararReceta(1, getName());
+            
+                    cocina.prepararReceta(especialidad, getName());
                     System.out.println(getName() + " cocinando....");
                     Thread.sleep(4000);
-                    cocina.terminarReceta(1, getName());
-                    break;
-                case "Verduras":
-                    cocina.prepararReceta(2, getName());
-                    System.out.println(getName() + " cocinando....");
-                    cocina.terminarReceta(2, getName());
-                    break;
-                case "Pasta":
-                    cocina.prepararReceta(3, getName());
-                    System.out.println(getName() + " cocinando....");
-                    cocina.terminarReceta(3, getName());
-                    break;
-                default:
-                    break;
-            }
+                    cocina.terminarReceta(especialidad, getName());
+                 
         } catch (InterruptedException ex) {
             Logger.getLogger(Cocinero.class.getName()).log(Level.SEVERE, null, ex);
         }
