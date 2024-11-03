@@ -23,7 +23,7 @@ public class ComedorCuartel {
    {
       semMostradorAlmuerzo=new Semaphore(5,true);
       semMostradorPostre=new Semaphore(3,true);      
-      semAbridores=new Semaphore(5,true);
+      semAbridores=new Semaphore(10,true);
    }
    public void almorzar(String nombre)
    {
@@ -37,7 +37,7 @@ public class ComedorCuartel {
                    System.out.println(nombre+" toma una bandeja y pide comida con una botella de agua");
                    break;
                case 2: //comer y tomar una gaseosa
-                   System.out.println(nombre+" toma una bandeja y pide comida con una gaseosa de agua");
+                   System.out.println(nombre+" toma una bandeja y pide comida con una botella de gaseosa");
                    System.out.println(nombre+" pide un abridor");
                    
                    semAbridores.acquire();
