@@ -20,11 +20,11 @@ public class Coche extends Thread {
          try { 
               if (direccion.equals("Norte")) {
             gestor.EntrarCocheDelNorte(getName());
-           Thread.sleep(2000);
+           Thread.sleep(3000);
             gestor.SalirCocheDelNorte(getName());
         } else {
             gestor.EntrarCocheDelSur(getName());
-            Thread.sleep(2000);
+            Thread.sleep(3000);
             gestor.SalirCocheDelSur(getName());
         }
                 

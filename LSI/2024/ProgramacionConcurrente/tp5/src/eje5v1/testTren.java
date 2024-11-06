@@ -12,7 +12,7 @@ package eje5v1;
  */
 public class testTren {
        public static void main(String[] args) {
-        int cantPasajeros = 3;
+        int cantPasajeros = 8;
         int capacidadTren = 3;  // Capacidad del tren
         Tren tren = new Tren(capacidadTren);
 
@@ -26,6 +26,6 @@ public class testTren {
             pasajeros[i] = new Pasajero("Pasajero " + (i + 1), tren);
             pasajeros[i].start();  // Cada pasajero intenta comprar un ticket y subirse al tren
         }
-
+       
     }
 }

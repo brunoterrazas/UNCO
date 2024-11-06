@@ -7,8 +7,20 @@ package eje6;
 
 /**
  *
- * @author Acer
+ * @author Brunot
  */
-public class Avion {
+public class Avion extends Thread {
+    private Pista pista;
+    private String tipoOperacion;
+    public Avion(String nombre,String operacion,Pista laPista)
+    {
+      super(nombre);
+      this.tipoOperacion=operacion;
+      this.pista=laPista;
+    }
+     @Override
+    public void run()
+    {
     
+    }
 }

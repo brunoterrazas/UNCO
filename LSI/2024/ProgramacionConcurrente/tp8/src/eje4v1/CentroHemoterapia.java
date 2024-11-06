@@ -116,36 +116,5 @@ private int cantPacientes=0;
         }
 
     }
-     public void contarCantPacientes(String nombre) {
-        try {
-            ingresar.acquire();
-            
-            this.cantPacientes = this.cantPacientes + 1;
-            System.out.println("Ingresante " + nombre + " registrado. Total: " + cantPacientes);
-
-         
-            ingresar.release();
-        } catch (InterruptedException ex) {
-        }
-
-    }
-    public void tomarCamilla(String donador)
-    {
-        try {
-            semCamilla.acquire();
-            System.out.println(donador + " ocupa una camilla para que le extraigan sangre");
-            mutexCamilla.acquire();
-            cantidadEnCamilla++;
-            mutexCamilla.release();
-            System.out.println(donador + " esta siendo atendido en su camilla");
-            Thread.sleep(2000);
-            mutexCamilla.acquire();
-            cantidadEnCamilla--;
-            mutexCamilla.release();
-            semCamilla.release();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(CentroHemoterapia.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    
-    }
+   
 }

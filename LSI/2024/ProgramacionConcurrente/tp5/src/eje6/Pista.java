@@ -5,10 +5,29 @@
  */
 package eje6;
 
+import java.util.concurrent.Semaphore;
+
 /**
  *
- * @author Acer
+ * @author Brunot
  */
 public class Pista {
-    
+  private Semaphore semAterrizando;
+  private Semaphore semDespegando;
+  private int maximoAviones;  
+  public Pista(int max)
+  {
+  
+    semAterrizando=new Semaphore(0,true);
+    semDespegando=new Semaphore(0,true);
+    maximoAviones=max; 
+  }
+  public void solicitarAterrizar()
+  { 
+  
+  }  
+  public void despegar()
+  {
+  
+  }
 }

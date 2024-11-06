@@ -28,7 +28,7 @@ public class Cocinero extends Thread {
     try {
             
                     cocina.prepararReceta(especialidad, getName());
-                    System.out.println(getName() + " cocinando....");
+                    System.out.println(getName() + " cocinando carne a la parrilla acompañada de pastas con un colchón de vegetales.....");
                     Thread.sleep(4000);
                     cocina.terminarReceta(especialidad, getName());
                  

@@ -3,11 +3,31 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp5/src/eje2b/Confiteria.java</file>
-            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp5/src/eje2b/testConfiteria.java</file>
-            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp5/src/eje2b/Empleado.java</file>
-            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp5/src/eje2b/Cocinero.java</file>
-            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp5/src/eje2b/Mozo.java</file>
+            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp5/src/eje2/Mozo.java</file>
+            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp5/src/eje5/Vendedor.java</file>
+            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp5/src/eje5/testTrenTuristico.java</file>
+            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp5/src/eje2/testConfiteria.java</file>
+            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp5/src/eje1/SemaphoreControlado.java</file>
+            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp5/src/eje5/Tren.java</file>
+            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp5/src/eje5v1/Vendedor.java</file>
+            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp5/src/eje6/Pista.java</file>
+            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp5/src/eje4a/Tren.java</file>
+            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp5/src/eje5v1/Pasajero.java</file>
+            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp5/src/eje4a/testTren.java</file>
+            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp5/src/eje7/Mirador.java</file>
+            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp5/src/eje5v1/ControlTren.java</file>
+            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp5/src/eje5/Pasajero.java</file>
+            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp5/src/eje5v1/testTren.java</file>
+            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp5/src/eje4a/Vendedor.java</file>
+            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp5/src/eje5/ControlTren.java</file>
+            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp5/src/eje1/GestorPiscina.java</file>
+            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp5/src/eje1/Persona.java</file>
+            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp5/src/eje2/Empleado.java</file>
+            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp5/src/eje4a/ControlTren.java</file>
+            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp5/src/eje5v1/Tren.java</file>
+            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp5/src/eje2/Confiteria.java</file>
+            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp5/src/eje6/Avion.java</file>
+            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp5/src/eje7/Encargado.java</file>
         </group>
     </open-files>
 </project-private>

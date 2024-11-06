@@ -38,10 +38,9 @@ public class GestionaTrafico {
    
     public synchronized void SalirCocheDelNorte(String nombre) {
         cantCochesNorte--;
+       
         
-        System.out.println(nombre + " ha salido del puente desde el norte");
-        
-         if(cochesCruzando==limiteCoches|| cantCochesNorte == 0)
+         if(cochesCruzando==limiteCoches+1|| (cantCochesNorte == 0))
         {//si es el ultimo coche que puede pasar antes de cambiar de turno
          //si terminaron de cruzar 10 coches
          turnoNorte=false;
@@ -49,7 +48,8 @@ public class GestionaTrafico {
          //Despierta a los coches que estan en espera
             notifyAll();
         }   
-        
+         
+        System.out.println(nombre + " ha salido del puente desde el norte");
     }
 
     public synchronized void EntrarCocheDelSur(String nombre) {
@@ -70,9 +70,10 @@ public class GestionaTrafico {
         cantCochesSur--;
         System.out.println(nombre + " ha salido del puente desde el sur");
         
-            if(cochesCruzando==limiteCoches || cantCochesSur == 0)
+            if(cochesCruzando==limiteCoches+1 || cantCochesSur == 0)
             {//si es el ultimo coche que puede pasar antes de cambiar de turno
          //si terminaron de cruzar 10 coches
+             
               turnoNorte=true;
               cochesCruzando=0;
                //Despierta a los coches que estan en espera

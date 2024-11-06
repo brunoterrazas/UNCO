@@ -2,11 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/locks/src/HamstersLocks/HamsterHilo.java</file>
-            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/locks/src/HamstersLocks/PlatoLock.java</file>
-            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/locks/src/HamstersLocks/RuedaLock.java</file>
-            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/locks/src/HamstersLocks/testHamsterLock.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

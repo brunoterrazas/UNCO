@@ -22,16 +22,16 @@ public class Tren {
     private int pasajerosEnTren = 0;    // Número de pasajeros que ya subieron al tren
     private Semaphore semTicket = new Semaphore(0, true);  // Para entregar tickets
     private Semaphore semMutex = new Semaphore(1);  // Exclusión mutua para acceso a los contadores
-    private Semaphore semPartir = new Semaphore(1);
+    private Semaphore semPartir = new Semaphore(0);
     private Semaphore semPasajerosEsperando = new Semaphore(0);
     private Semaphore pasajerosTren;  // Para controlar cuántos pasajeros pueden subir al tren
     private int capacidadTren;
-
+ 
     public Tren(int capacidadTren) {
         this.capacidadTren = capacidadTren;
         this.pasajerosTren = new Semaphore(0, true);  // Inicialmente no hay espacio hasta que se libere
     }
-
+   
     // Pasajeros compran tickets
     public void comprarTicket(String pasajero) {
         try {
@@ -57,11 +57,12 @@ public class Tren {
     }
 
     // Pasajeros suben al tren
+// Pasajeros suben al tren
 public void subir(String pasajero) {
     try {
         System.out.println(pasajero + " está esperando para subir al tren");
         
-        semMutex.acquire();  // Proteger la modificación del contador
+        semMutex.acquire(); 
         pasajerosEnEspera++;
         
         if (pasajerosEnEspera == capacidadTren) {
@@ -77,10 +78,12 @@ public void subir(String pasajero) {
         System.out.println(pasajero + " subió al tren. Pasajeros en el tren: " + pasajerosEnTren);
         
         semMutex.release();
+        
     } catch (InterruptedException ex) {
         Logger.getLogger(Tren.class.getName()).log(Level.SEVERE, null, ex);
     }
 }
+
 
 // El tren parte cuando está lleno
 public void partir() {
@@ -90,6 +93,7 @@ public void partir() {
         semMutex.acquire();
         System.out.println("El tren está lleno. Va a partir con " + capacidadTren + " pasajeros");
          // Permite que los pasajeros suban
+         
         pasajerosTren.release(capacidadTren); 
         Thread.sleep(2000);  
         

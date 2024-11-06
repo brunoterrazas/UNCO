@@ -7,8 +7,18 @@ package eje6;
 
 /**
  *
- * @author Acer
+ * @author Brunot
  */
-public class Torre {
+public class Torre extends Thread{
+    private Pista pista;
+    public Torre(String nom,Pista laPista)
+    {
+     super(nom);
+     pista=laPista;
+    }
+    @Override
+    public void run()
+    {
     
+    }
 }

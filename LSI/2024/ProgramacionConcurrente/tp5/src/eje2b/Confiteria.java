@@ -53,20 +53,14 @@ public class Confiteria {
     // Empleados intentan sentarse
     public boolean sentarse(String empleado) {
         boolean asientoLibre = semSillaLibre.tryAcquire();  // Ver si hay asientos libres
-         try {
-            this.semMutex.acquire();
-            this.contador++;
-            this.semMutex.release();     
+        
                       
         if (asientoLibre) {
             
             System.out.println(empleado + " se sienta");
         }
          
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Confiteria.class.getName()).log(Level.SEVERE, null, ex);
-        }
-         
+       
         
         
        
@@ -105,6 +99,13 @@ public class Confiteria {
 
     public void dejarAsiento(String empleado) {
         System.out.println(empleado + " agradece y se vuelve a trabajar");
+        try {
+            this.semMutex.acquire();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Confiteria.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            this.contador++;
+            this.semMutex.release();     
         semSillaLibre.release();  
     }
 
