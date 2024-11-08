@@ -22,6 +22,8 @@ public class Persona extends Thread {
     @Override
     public void run()
     {
-        
+        observatorio.ingresar(getName(),tipo);
+        observatorio.salir(getName(),tipo);
+        observatorio.notificar();
     }
 }
