@@ -14,10 +14,20 @@ package eje4v1;
  */
 public class Donador extends Thread{
    private CentroHemoterapia centro;
+   private int turno;
+
+    public int getTurno() {
+        return turno;
+    }
+
+    public void setTurno(int turno) {
+        this.turno = turno;
+    }
    public Donador(String nombre,CentroHemoterapia centroh)
    {
      super(nombre);
      centro=centroh;
+     turno=0;
    }
    @Override
    public void run()
