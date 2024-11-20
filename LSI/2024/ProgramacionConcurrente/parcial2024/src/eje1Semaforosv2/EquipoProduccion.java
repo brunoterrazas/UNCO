@@ -34,7 +34,7 @@ public class EquipoProduccion  extends Thread {
                         Thread.sleep(200);
                         break;
                     case "carrocerias":
-                        fabrica.producirCarroceria("Equipo "+tipo);
+                        fabrica.producirCarrocerias("Equipo "+tipo);
                         Thread.sleep(300);
                         break;
                 }

@@ -17,7 +17,7 @@ public class testMain {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        Fabrica fabrica= new Fabrica(10,10,5);
+        Fabrica fabrica= new Fabrica(40,20,10);
         EquipoProduccion equipoRuedas= new EquipoProduccion(fabrica,"ruedas");
         EquipoProduccion equipoPuertas= new EquipoProduccion(fabrica,"puertas");
         EquipoProduccion equipoCarrocerias= new EquipoProduccion(fabrica,"carrocerias");

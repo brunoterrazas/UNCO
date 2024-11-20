@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package eje1Semaforosv2;
 
 import java.util.concurrent.Semaphore;
@@ -15,81 +14,153 @@ import java.util.logging.Logger;
  * @author Brunot
  */
 public class Fabrica {
-    private int cantidadAutos;
-    private Semaphore semDisponiblesRuedas;
-    private Semaphore semDisponiblesPuertas;
-    private Semaphore semDisponiblesCarroceria;
-    private Semaphore semCapacidadMaximaRuedas;
-    private Semaphore semCapacidadMaximaPuertas;
-    private Semaphore semCapacidadMaximaCarroceria;
-    private Semaphore semEnsamblar;
-    public Fabrica(int ruedasCapacidad, int puertasCapacidad, int carroceriaCapacidad) {
-        semDisponiblesRuedas = new Semaphore(0);
-        semDisponiblesPuertas = new Semaphore(0);
-        semDisponiblesCarroceria = new Semaphore(0);
-        semCapacidadMaximaRuedas = new Semaphore(ruedasCapacidad);
-        semCapacidadMaximaPuertas = new Semaphore(puertasCapacidad);
-        semCapacidadMaximaCarroceria = new Semaphore(carroceriaCapacidad);
-        semEnsamblar = new Semaphore(1);
-        cantidadAutos = 0;
-    }
 
-    public void producirRuedas(String equipo) {
-        try {
-            semCapacidadMaximaRuedas.acquire();
-            System.out.println(equipo + " produciendo rueda.");
-            semDisponiblesRuedas.release();
-        } catch (InterruptedException e) {
-            System.err.println(equipo + " fue interrumpido mientras producía ruedas.");
-        }
+    Semaphore semRueda, semPuerta, semCarroceria, semEnsamblador, puertas, ruedas, carroceria;
+    int cantRuedas, cantPuertas, cantCarrocerias, capacidadRuedas, capacidadPuertas, capacidadCarroceria;
+    int cantAutos;
+    private final Semaphore puertasEspera;
+    private final Semaphore ruedasEspera;
+    private final Semaphore carroceriaEspera;
+    private Semaphore mutexPuertas;
+    private Semaphore mutexRuedas;
+    private Semaphore mutexCarrocerias;
+
+    public Fabrica(int capacidadRuedas, int capacidadPuertas, int capacidadCarroceria) {
+
+        this.capacidadCarroceria = capacidadCarroceria;
+        this.capacidadPuertas = capacidadPuertas;
+        this.capacidadRuedas = capacidadRuedas;
+
+        this.semCarroceria = new Semaphore(1);
+        this.semRueda = new Semaphore(1);
+        this.semPuerta = new Semaphore(1);
+        this.semEnsamblador = new Semaphore(1);
+        this.mutexCarrocerias = new Semaphore(1);
+        this.mutexRuedas = new Semaphore(1);
+        this.mutexPuertas = new Semaphore(1);
+        this.puertas = new Semaphore(0);
+        this.ruedas = new Semaphore(0);
+        this.carroceria = new Semaphore(0);
+        cantPuertas = 0;
+        cantRuedas = 0;
+        cantCarrocerias = 0;
+        cantAutos = 0;
+        this.puertasEspera = new Semaphore(0);
+        this.ruedasEspera = new Semaphore(0);
+        this.carroceriaEspera = new Semaphore(0);
+
     }
 
     public void producirPuertas(String equipo) {
         try {
-            semCapacidadMaximaPuertas.acquire();
-            System.out.println(equipo + " produciendo puerta.");
-            semDisponiblesPuertas.release();
-        } catch (InterruptedException e) {
-            System.err.println(equipo + " fue interrumpido mientras producía puertas.");
+            this.semPuerta.acquire();
+            while (cantPuertas >= capacidadPuertas) {
+
+                System.out.println(equipo + " llenó la caja de puertas");
+
+                puertasEspera.acquire();
+
+            }
+            mutexPuertas.acquire();
+            cantPuertas++;
+            this.puertas.release();
+            mutexPuertas.release();
+            
+            this.semPuerta.release();
+
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Fabrica.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
-    public void producirCarroceria(String equipo) {
+    public void producirRuedas(String equipo) {
         try {
-            semCapacidadMaximaCarroceria.acquire();
-            System.out.println(equipo + " produciendo carrocería.");
-            semDisponiblesCarroceria.release();
-        } catch (InterruptedException e) {
-            System.err.println(equipo + " fue interrumpido mientras producía carrocerías.");
+            this.semRueda.acquire();
+            while (cantRuedas >= capacidadRuedas) {
+                System.out.println(equipo + " llenó la caja de ruedas");
+
+                ruedasEspera.acquire();
+
+            }
+            mutexRuedas.acquire();
+            cantRuedas++;
+            this.ruedas.release();
+            mutexRuedas.release();
+            System.out.println("cantidad de ruedas en metodoRuedas " + cantRuedas);
+           
+            this.semRueda.release();
+
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Fabrica.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void producirCarrocerias(String equipo) {
+        try {
+            this.semCarroceria.acquire();
+            while (cantCarrocerias >= capacidadCarroceria) {
+                System.out.println(equipo + " llenó la caja de carrocerias");
+                carroceriaEspera.acquire();
+
+            }
+            mutexCarrocerias.acquire();
+            cantCarrocerias++;
+             this.carroceria.release();
+            mutexCarrocerias.release();
+           
+            this.semCarroceria.release();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Fabrica.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public void ensamblarAutomovil(String equipo) {
         try {
-            semDisponiblesPuertas.acquire(2);
-            semDisponiblesRuedas.acquire(4);
-            semDisponiblesCarroceria.acquire(1);
-            semEnsamblar.acquire();
+            this.semEnsamblador.acquire();
+            if (cantAutos == 5) {
 
-            cantidadAutos++;
-            System.out.println(equipo + " ensamblando auto número " + cantidadAutos);
+                System.out.println(equipo + " empaqueta vehiculos producidos a , autos:" + cantAutos);
+                Thread.sleep(200);
+                cantAutos = 0;
 
-            if (cantidadAutos % 5 == 0) {
-                empaquetarAutos();
+            }
+             this.ruedas.acquire(4);
+            mutexRuedas.acquire();
+            
+            cantRuedas = cantRuedas - 4;
+            mutexRuedas.release();
+            System.out.println("cantidad de ruedas despues de restar -4 => " + cantRuedas);
+
+            if (cantRuedas < capacidadRuedas) {
+                puertasEspera.release();
             }
 
-            semCapacidadMaximaPuertas.release(2);
-            semCapacidadMaximaRuedas.release(4);
-            semCapacidadMaximaCarroceria.release(1);
-            semEnsamblar.release();
-        } catch (InterruptedException e) {
-            System.err.println(equipo + " fue interrumpido mientras ensamblaba.");
-        }
-    }
+            System.out.println(equipo + " autos producidos: " + cantAutos);
+            this.puertas.acquire(2);
+            mutexPuertas.acquire();
+            cantPuertas = cantPuertas - 2;
+            mutexPuertas.release();
+            if (cantPuertas < this.capacidadPuertas) {
+                puertasEspera.release();
+            }
+            this.carroceria.acquire(1);
+            mutexCarrocerias.acquire();
+            cantCarrocerias--;
+            mutexCarrocerias.release();
 
-    private void empaquetarAutos() throws InterruptedException {
-        System.out.println("Empaquetando autos...");
-        Thread.sleep(200);
-        System.out.println("Autos empaquetados y listos para distribución.");
+            if (cantCarrocerias < capacidadCarroceria) {
+                carroceriaEspera.release();
+            }
+            System.out.println("Un vehiculo producido ");
+
+            cantAutos++;
+            this.semEnsamblador.release();
+
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Fabrica.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 }
