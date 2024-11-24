@@ -10,17 +10,25 @@ package eje6;
  * @author Brunot
  */
 public class Avion extends Thread {
-    private Pista pista;
+
+    private TorreControl pista;
     private String tipoOperacion;
-    public Avion(String nombre,String operacion,Pista laPista)
-    {
-      super(nombre);
-      this.tipoOperacion=operacion;
-      this.pista=laPista;
+
+    public Avion(String nombre, String operacion, TorreControl laPista) {
+        super(nombre);
+        this.tipoOperacion = operacion;
+        this.pista = laPista;
     }
-     @Override
-    public void run()
-    {
-    
+
+    @Override
+    public void run() {
+        if (tipoOperacion.equals("despegar")) {
+            pista.solicitarDespegar(getName());
+
+        } else {
+            pista.solicitarAterrizar(getName());
+
+        }
+
     }
 }
