@@ -9,6 +9,17 @@ package eje7;
  *
  * @author Usuario
  */
-public class Visitante {
-    
+public class Visitante extends Thread {
+    Mirador mirador;
+    public Visitante(String nom,Mirador m)
+    {
+      super(nom);
+      mirador=m;
+    }
+    @Override
+    public void run()
+    {
+      mirador.subirEscalera(getName());
+      mirador.bajarTobogan(getName());
+    }
 }
