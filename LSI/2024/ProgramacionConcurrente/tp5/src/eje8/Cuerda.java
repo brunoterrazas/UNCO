@@ -11,116 +11,81 @@ import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-// Clase Cuerda
+
 public class Cuerda {
 
-    private final int maximo; // Máximo de babuinos que pueden estar en la cuerda
-    private int cantidadLadoIzq;
-    private int cantidadLadoDer;
-    private final Semaphore semLadoIzquierdo;
-    private final Semaphore semLadoDerecho;   
-    private final Semaphore semCruzar;        
-    private final Semaphore semMutex;        
    
+    private final int maximo; // Máximo de babuinos en la cuerda
+    private int cantCruzando = 0;
+    private int cantEsperandoIzq = 0, cantEsperandoDer = 0;
+    private boolean turnoIzq = true;
 
-    public Cuerda(int max, int cantMontosI, int cantMonosD) {
-        maximo = 5;                           // Máximo de babuinos en la cuerda
-        semLadoIzquierdo = new Semaphore(1);  
-        semLadoDerecho = new Semaphore(0);   
-        semCruzar = new Semaphore(max);       
-        semMutex = new Semaphore(1);         
-        cantidadLadoIzq = cantMontosI;
-        cantidadLadoDer = cantMonosD;
+    private final Semaphore semMutex;     
+    private final Semaphore semEsperarIzq; 
+    private final Semaphore semEsperarDer;
+
+    public Cuerda(int max) {
+        this.maximo = max;
+        this.semMutex = new Semaphore(1);
+        this.semEsperarIzq = new Semaphore(0);
+        this.semEsperarDer = new Semaphore(0);
     }
 
-    public void intentarCruzar(String lado, String nombre) {
-        if ("Izquierdo".equals(lado)) {
-            cruzarLadoIzquierdo(nombre);
-           dejarCuerdaLadoIzquierdo(nombre);
-        } else {
-            cruzarLadoDerecho(nombre);
-           dejarCuerdaLadoDerecho(nombre);
-        }
-    }
-
-    /* Método para que los babuinos crucen al lado izquierdo */
     public void cruzarLadoIzquierdo(String nombre) {
         try {
-            System.out.println(nombre + " esperando para cruzar al lado izquierdo");
-            semLadoIzquierdo.acquire();  // Espera su turno para cruzar
-            semCruzar.acquire();         // Asegura que no haya más de 5 babuinos en la cuerda a la vez
-            semMutex.acquire();          // Mutex para modificar el contador
-
-            cantidadLadoIzq--;
-            System.out.println(nombre + " cruzando al lado izquierdo... Babuinos que quedan: " + cantidadLadoIzq);
+            semMutex.acquire();
+            cantEsperandoIzq++;
+            while (!turnoIzq || cantCruzando >= maximo) {
+                semMutex.release();
+                semEsperarIzq.acquire();
+                semMutex.acquire();
+            }
+            cantEsperandoIzq--;
+            cantCruzando++;
+            System.out.println(nombre + " está cruzando al lado derecho. (Babuinos en la cuerda: " + cantCruzando + ")");
             semMutex.release();
-           
 
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Cuerda.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void dejarCuerdaLadoDerecho(String nombre) {
-        try {
+            Thread.sleep(1000);
 
             semMutex.acquire();
-            System.out.println(nombre + " llegó al lado derecho");
-
-            if (cantidadLadoDer == 0) {
-                // Si todos los babuinos del lado derecho han cruzado, liberar al lado izquierdo
-                semLadoIzquierdo.release();  // Despierta a los del lado derecho
-
-            } else {
-                // Si aún quedan babuinos del lado derecho, permitirles cruzar
-                semLadoDerecho.release();
+            cantCruzando--;
+            if (cantCruzando == 0 && cantEsperandoDer > 0) {
+                turnoIzq = false;
+                semEsperarDer.release(cantEsperandoDer); // Despierta babuinos del lado derecho
             }
             semMutex.release();
-            semCruzar.release(); // Libera un lugar en la cuerda para otro babuino
 
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Cuerda.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
-    public void dejarCuerdaLadoIzquierdo(String nombre) {
-
-        try {
-            semMutex.acquire();
-            System.out.println(nombre + " llegó al lado izquierdo");
-            if (cantidadLadoIzq == 0) {
-                // Si todos los babuinos del lado izquierdo han cruzado, liberar al lado derecho
-                semLadoDerecho.release();  // Despierta a los del lado derecho
-
-            } else {
-                // Si aún quedan babuinos del lado izquierdo, permitirles cruzar
-                semLadoIzquierdo.release();
-            }
-            semMutex.release();
-            semCruzar.release(); // Libera un lugar en la cuerda para otro babuino
-
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Cuerda.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    /* Método para que los babuinos crucen al lado derecho */
     public void cruzarLadoDerecho(String nombre) {
         try {
-            System.out.println(nombre + " esperando para cruzar al lado derecho");
-            semLadoDerecho.acquire();   // Espera su turno para cruzar
-            semCruzar.acquire();        // Asegura que no haya más de 5 babuinos en la cuerda a la vez
-            semMutex.acquire();      
+            semMutex.acquire();
+            cantEsperandoDer++;
+            while (turnoIzq || cantCruzando >= maximo) {
+                semMutex.release();
+                semEsperarDer.acquire();
+                semMutex.acquire();
+            }
+            cantEsperandoDer--;
+            cantCruzando++;
+            System.out.println(nombre + " está cruzando al lado izquierdo. (Babuinos en la cuerda: " + cantCruzando + ")");
+            semMutex.release();
 
-            cantidadLadoDer--;
-            System.out.println(nombre + " cruzando al lado derecho... Babuinos que quedan: " + cantidadLadoDer);
-            semMutex.release();         
-           
-           
-           
+            Thread.sleep(1000);
 
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Cuerda.class.getName()).log(Level.SEVERE, null, ex);
+            semMutex.acquire();
+            cantCruzando--;
+            if (cantCruzando == 0 && cantEsperandoIzq > 0) {
+                turnoIzq = true;
+                semEsperarIzq.release(cantEsperandoIzq); // Despierta babuinos del lado izquierdo
+            }
+            semMutex.release();
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }

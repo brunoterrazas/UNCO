@@ -5,25 +5,30 @@
  */
 package eje8b;
 
-import eje8.*;
+
 
 /**
  *
  * @author Brunot
  */
 public class testBabuinos {
+
     public static void main(String[] args) {
-        Cuerda cuerda = new Cuerda(10,15);  // Cuerda que soporta hasta 5 babuinos
+        Cuerda cuerda = new Cuerda(5);  // Cuerda que soporta hasta 5 babuinos
         String[] lado = {"Izquierdo", "Derecho"};
-        int cantidadBabuinos=25;
-        Babuino[] babuinos=new Babuino[cantidadBabuinos];
-        for (int i = 0; i < 5; i++) {
-           babuinos[i]=new Babuino("Babuino " + (i + 1),lado[valorRandom(2)-1], cuerda);
-           babuinos[i].start();
+        int cantidadBabuinosizq = 10;
+        Babuino[] babuinosIzq = new Babuino[cantidadBabuinosizq];
+        for (int i = 0; i < babuinosIzq.length; i++) {
+            babuinosIzq[i] = new Babuino("Babuino I-" + (i + 1), "izquierdo", cuerda);
+            babuinosIzq[i].start();
         }
-       
+        int cantidadBabuinosDer = 11;
+        Babuino[] babuinosDer = new Babuino[cantidadBabuinosDer];
+        for (int i = 0; i < babuinosDer.length; i++) {
+            babuinosDer[i] = new Babuino("Babuino D-" + (i + 1), "derecho", cuerda);
+            babuinosDer[i].start();
+        }
+
     }
-     public static int valorRandom(int max) {
-        return (int) (Math.random() * max + 1);
-    }
+
 }

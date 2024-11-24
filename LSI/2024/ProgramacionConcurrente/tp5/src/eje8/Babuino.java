@@ -21,8 +21,13 @@ public class Babuino extends Thread {
     @Override
     public void run()
     {
-        
-       cuerda.intentarCruzar(lado,this.getName());
+        if(lado.equals("izquierdo"))
+        {
+         cuerda.cruzarLadoIzquierdo(this.getName());
+        }else{
+        cuerda.cruzarLadoDerecho(this.getName());
     
+        }
+       
     }
 }
