@@ -6,8 +6,6 @@
 
 package montaniaRusaSemaforos;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -23,9 +21,8 @@ public class Pasajero extends Thread {
   @Override
     public void run()
     {
-        while(true)
-        {
+       
           carro.subir(getName());
-        }
+          //System.out.println(getName()+"termino");
     }
 }
