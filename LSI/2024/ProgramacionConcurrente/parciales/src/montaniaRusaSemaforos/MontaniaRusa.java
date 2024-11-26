@@ -16,58 +16,49 @@ import java.util.logging.Logger;
 public class MontaniaRusa {
 
     private Semaphore semSubir, semPartir, mutex, semTerminarVuelta;
-    private int recorridos, maxRecorridos, maxCapacidad, pasajerosEnTren,pasajerosEnEspera, cantViajes;
-    private boolean activo,estaCerrado;
+    private int recorridos, maxRecorridos, maxCapacidad,pasajerosABordo, pasajerosEnEspera, cantViajes;
+    private boolean activo, estaCerrado;
 
     public MontaniaRusa(int capacidad, int cantRecorridos) {
         semSubir = new Semaphore(capacidad, true);
         semPartir = new Semaphore(0);
         maxCapacidad = capacidad;
         maxRecorridos = cantRecorridos;
-        mutex = new Semaphore(1,true);
+        mutex = new Semaphore(1, true);
         semTerminarVuelta = new Semaphore(0, true);
-        pasajerosEnTren = 0;
+       pasajerosABordo = 0;
         pasajerosEnEspera = 0;
-
         recorridos = 0;
         cantViajes = 0;
-        activo=true;
-        estaCerrado=false;
-        
-    }
+        activo = true;
+       }
 
     public void subir(String pasajero) {
         try {
-            while(activo)
-            {
-            mutex.acquire();
-            pasajerosEnEspera++;
-            mutex.release();
-            semSubir.acquire();
-            mutex.acquire();
-             if(!activo)
-             {
-                // System.out.println(pasajero+" no pudo subir al carro, porque esta cerrado porque alzanzo el limite de recorridos");
-                 mutex.release();
-                 if(!estaCerrado)
-                 {
-                  semPartir.release();
-                 }
-              break;
-             }
-             
-            pasajerosEnTren++;
-            pasajerosEnEspera--;
-            System.out.println(pasajero + " subió al carro");
-            cantViajes++;
-            mutex.release();
-            if (pasajerosEnTren == maxCapacidad) {
-                semPartir.release();
+            while (activo) {
+                mutex.acquire();
+                pasajerosEnEspera++;
+                mutex.release();
+                semSubir.acquire();
+                mutex.acquire();
+                //Verificamos si esta activo el carro 
+                if (!activo) {/* System.out.println(pasajero+" no pudo subir al carro, 
+                   porque esta cerrado porque alcanzo el limite de recorridos"); */
+                    mutex.release();
+                    break;
+                }
+               pasajerosABordo++;
+                pasajerosEnEspera--;
+                System.out.println(pasajero + " subió al carro");
+                cantViajes++;
+                mutex.release();
+                if (pasajerosABordo== maxCapacidad) {
+                    semPartir.release();
+                }
+                semTerminarVuelta.acquire();
+                System.out.println(pasajero + " terminó de dar la vuelta");
             }
-            semTerminarVuelta.acquire();
-            System.out.println(pasajero + " terminó de dar la vuelta");
-            }
-            
+
         } catch (InterruptedException ex) {
             Logger.getLogger(MontaniaRusa.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -75,36 +66,34 @@ public class MontaniaRusa {
 
     public void darVuelta() {
         try {
-            while (activo)  
-            {
-                
-                
+            while (activo||(recorridos < maxRecorridos)) {
+
                 if (!activo) {
                     break;
                 }
-                 if (recorridos < maxRecorridos) {
-                semPartir.acquire();
-                System.out.println(".......Tren viajando........");
-                Thread.sleep(2000);
-
-                semTerminarVuelta.release(maxCapacidad);
-                System.out.println("....Pasajeros bajando....");
-                Thread.sleep(1000);
-                mutex.acquire();
-                pasajerosEnTren = 0;
-                mutex.release();
-                recorridos++;
-                System.out.println("Recorridos: " + recorridos);
-                semSubir.release(maxCapacidad);
-                 }else {
+                if (recorridos < maxRecorridos) {
+                    semPartir.acquire();
+                    System.out.println(".......Tren viajando........");
+                    Thread.sleep(2000);
+                    semTerminarVuelta.release(maxCapacidad);
+                    System.out.println("....Pasajeros bajando....");
+                    Thread.sleep(1000);
+                    mutex.acquire();
+                   pasajerosABordo = 0;
+                    mutex.release();
+                    recorridos++;
+                    System.out.println("Capacidad Carro "+maxCapacidad+" Cantidad de recorridos: " + recorridos);
+                    semSubir.release(maxCapacidad);
+                } else {
                     // Si ya se alcanzó el máximo de recorridos, libera a los pasajeros que no pudieron subir
                     activo = false;
-                System.out.println("Pasajeros que no puedieron entrar: "+pasajerosEnEspera);
-                 semSubir.release(pasajerosEnEspera);
-                mutex.release();
+                    System.out.println("Pasajeros que no pudieron entrar: " + pasajerosEnEspera+ ", viajes en total: "+getTotal()+"");
+                    semSubir.release(pasajerosEnEspera);
+                    mutex.release();
+                    semPartir.release();//libero el permiso para que vuelva a entrar y termine su ejecucion
                     break;
                 }
-            } 
+            }
 
         } catch (InterruptedException ex) {
             Logger.getLogger(MontaniaRusa.class.getName()).log(Level.SEVERE, null, ex);
@@ -115,6 +104,7 @@ public class MontaniaRusa {
     public boolean isActivo() {
         return activo;
     }
+
     public int getCantViajes() {
         return cantViajes;
     }

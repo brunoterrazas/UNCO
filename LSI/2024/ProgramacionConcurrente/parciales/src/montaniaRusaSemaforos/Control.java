@@ -21,9 +21,8 @@ public class Control extends Thread {
     @Override
     public void run() {
 
-        while (carro.getRecorridos() < carro.getMaxRecorridos()) { // Verificar límite de recorridos
             carro.darVuelta();
-        }
+      
         System.out.println("El carro ha completado todos los recorridos permitidos.");
     }
 }
