@@ -69,7 +69,7 @@ public class MontaniaRusa {
             while (activo||(recorridos < maxRecorridos)) {
 
                 if (!activo) {
-                    break;
+                    break;//el hilo control termina su ejecucion
                 }
                 if (recorridos < maxRecorridos) {
                     semPartir.acquire();
@@ -90,7 +90,7 @@ public class MontaniaRusa {
                     System.out.println("Pasajeros que no pudieron entrar: " + pasajerosEnEspera+ ", viajes en total: "+getTotal()+"");
                     semSubir.release(pasajerosEnEspera);
                     mutex.release();
-                    semPartir.release();//libero el permiso para que vuelva a entrar y termine su ejecucion
+                    semPartir.release();//libero el permiso para que vuelva a entrar y pueda terminar su ejecucion
                     break;
                 }
             }
