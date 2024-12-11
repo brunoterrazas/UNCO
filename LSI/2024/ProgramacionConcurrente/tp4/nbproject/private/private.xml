@@ -2,6 +2,12 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp4/src/eje8/Producto.java</file>
+            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp4/src/eje8/ControladorProduccion.java</file>
+            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp4/src/eje8/Linea.java</file>
+            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp4/src/eje8/ProductoMecanico.java</file>
+            <file>file:/C:/laragon/www/UNCO/LSI/2024/ProgramacionConcurrente/tp4/src/eje8/ProductoElectrico.java</file>
+        </group>
     </open-files>
 </project-private>

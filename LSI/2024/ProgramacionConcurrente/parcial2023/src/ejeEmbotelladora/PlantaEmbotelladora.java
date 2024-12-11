@@ -18,8 +18,8 @@ public class PlantaEmbotelladora {
     private int cajas, botellasVino, botellasAgua;
     private final int CAPACIDAD_CAJA_VINO = 10;
     private final int CAPACIDAD_CAJA_AGUA = 10;
-    private final int CAPACIDAD_DEPOSITO = 100;
-    private Semaphore semEmbotellarVino, semEmbotellarAgua, semEmpaquetar,semRepartir,semCajaVino, semCajaAgua, semChofer,
+    private final int CAPACIDAD_DEPOSITO = 20;
+    private Semaphore semEmbotellarVino, semEmbotellarAgua, semEmpaquetar, semRepartir, semCajaVino, semCajaAgua, semChofer,
             mutexVino, mutexAgua;
 
     public PlantaEmbotelladora() {
@@ -31,8 +31,8 @@ public class PlantaEmbotelladora {
         semCajaVino = new Semaphore(0);
         semCajaAgua = new Semaphore(0);
         cajas = 0;
-        mutexVino=new Semaphore(1);
-        mutexAgua=new Semaphore(1);
+        mutexVino = new Semaphore(1);
+        mutexAgua = new Semaphore(1);
         botellasVino = 0;
         botellasAgua = 0;
 
@@ -50,7 +50,7 @@ public class PlantaEmbotelladora {
             }
             mutexVino.acquire();
             botellasVino++;
-            System.out.println(embotellador+" agrega una botella a la caja de vino: "+botellasVino);
+            System.out.println(embotellador + " agrega una botella a la caja de vino: " + botellasVino);
             mutexVino.release();
             semEmbotellarVino.release();
         } catch (InterruptedException ex) {
@@ -70,7 +70,7 @@ public class PlantaEmbotelladora {
             }
             mutexAgua.acquire();
             botellasAgua++;
-            System.out.println(embotellador+" agrega una botella a la caja de agua: "+botellasAgua);
+            System.out.println(embotellador + " agrega una botella a la caja de agua: " + botellasAgua);
             mutexAgua.release();
             semEmbotellarAgua.release();
         } catch (InterruptedException ex) {
@@ -80,7 +80,7 @@ public class PlantaEmbotelladora {
 
     public void cambiarCaja() {
         try {
-            
+
             semEmpaquetar.acquire();
             while (cajas >= CAPACIDAD_DEPOSITO) {
                 semChofer.release();
@@ -102,7 +102,7 @@ public class PlantaEmbotelladora {
                 }
             }
             cajas++;
-            semEmpaquetar.release();
+           semEmpaquetar.release();
 
         } catch (InterruptedException ex) {
             Logger.getLogger(PlantaEmbotelladora.class.getName()).log(Level.SEVERE, null, ex);
@@ -112,12 +112,12 @@ public class PlantaEmbotelladora {
 
     public void repartirCajas() {
         try {
-             System.out.println("El chofer esperando en el camion");
+
             semChofer.acquire();
             System.out.println("El chofer sale a distribuir las cajas en el camion");
             cajas = 0;
             semRepartir.release();
-           
+
         } catch (InterruptedException ex) {
             Logger.getLogger(PlantaEmbotelladora.class.getName()).log(Level.SEVERE, null, ex);
         }

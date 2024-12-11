@@ -13,7 +13,7 @@ public class testEmbotelladora {
 
     public static void main(String[] args) {
         PlantaEmbotelladora planta = new PlantaEmbotelladora();
-        int cantEmbVino = 1;
+        int cantEmbVino = 3;
         Embotellador[] embotelladoresVino = new Embotellador[cantEmbVino];
         Empaquetador empaquetador=new Empaquetador("empaquetador",planta);
         empaquetador.start();
@@ -24,7 +24,7 @@ public class testEmbotelladora {
             embotelladoresVino[i].start();
         }
 
-        int cantEmbAgua = 1;
+        int cantEmbAgua = 3;
         Embotellador[] embotelladoresAgua = new Embotellador[cantEmbAgua];
         for (int i = 0; i < cantEmbAgua; i++) {
 

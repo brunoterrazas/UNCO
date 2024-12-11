@@ -16,13 +16,13 @@ public class testBabuinos {
     public static void main(String[] args) {
         Cuerda cuerda = new Cuerda(5);  // Cuerda que soporta hasta 5 babuinos
         String[] lado = {"Izquierdo", "Derecho"};
-        int cantidadBabuinosizq = 10;
+        int cantidadBabuinosizq = 11;
         Babuino[] babuinosIzq = new Babuino[cantidadBabuinosizq];
         for (int i = 0; i < babuinosIzq.length; i++) {
             babuinosIzq[i] = new Babuino("Babuino I-" + (i + 1), "izquierdo", cuerda);
             babuinosIzq[i].start();
         }
-        int cantidadBabuinosDer = 11;
+        int cantidadBabuinosDer = 10;
         Babuino[] babuinosDer = new Babuino[cantidadBabuinosDer];
         for (int i = 0; i < babuinosDer.length; i++) {
             babuinosDer[i] = new Babuino("Babuino D-" + (i + 1), "derecho", cuerda);
