@@ -87,7 +87,7 @@ public class MontaniaRusa {
                     semSubir.release(maxCapacidad);
                 } else {
                     // Si ya se alcanzó el máximo de recorridos, libera a los pasajeros que no pudieron subir
-				    mutex.acquire();
+	            mutex.acquire();
                     activo = false;
                     System.out.println("Pasajeros que no pudieron entrar: " + pasajerosEnEspera+ ", viajes en total: "+getTotal()+"");
                     semSubir.release(pasajerosEnEspera);
