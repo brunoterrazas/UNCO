@@ -1,0 +1,13 @@
+#header {
+    background: rgb(203, 203, 203);
+    background: linear-gradient(0deg, rgba(203, 203, 203, 1) 0%, rgba(255, 255, 255, 1) 100%, rgba(242, 242, 242, 1) 100%);
+}
+.principal{
+    min-height: 800px;
+    width: auto;
+    height: auto;
+}
+#subfooter
+{
+    background-color:BLACK;
+}
