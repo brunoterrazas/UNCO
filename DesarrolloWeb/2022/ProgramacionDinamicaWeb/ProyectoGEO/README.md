@@ -3,8 +3,8 @@
 
 ## Descripción
 
-Trabajo práctico que muestra cómo integrar la librería PHPGeo, en base a  coordenadas  conformar figuras (como calcular distancias de línea, polilínea y area de un polígono), y utilizar la API de Google Maps para graficarlas.  
-Se incluye la carga de datos desde un formulario, el procesamiento con PHP y la representación visual del recorrido sobre el mapa.
+Trabajo práctico que muestra cómo integrar la librería PHPGeo, permite en base a  coordenadas  conformar figuras (línea, polilínea, polígono) para calcular distancias y areas principalmente, utilizando la API de Google Maps para graficar.  
+Se incluye la carga de datos desde  formularios, el procesamiento con PHP y la representación visual de las figuras sobre el mapa.
 
 
 ## Origen
